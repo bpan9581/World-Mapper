@@ -45,7 +45,7 @@ const CreateAccount = (props) => {
 
 		<WModal className="signup-modal" visible = {props.showCreate} animation="slide-fade-top" cover = {true}>
 			<div className="modal-header" onClose={() => props.setShowCreate(false)}>
-				Sign Up
+				Create Account
 			</div>
 
 			{

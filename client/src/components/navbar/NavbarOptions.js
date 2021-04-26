@@ -12,16 +12,23 @@ const LoggedIn = (props) => {
         const { data } = await props.fetchUser();
         if (data) {
             let reset = await client.resetStore();
-            if (reset) props.setActiveList({});
+            if (reset) ;//Previously props.setActiveList({})
         }
     };
 
     return (
-        <WNavItem hoverAnimation="lighten">
-            <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
-                Logout
-            </WButton>
-        </WNavItem >
+        <>
+            <WNavItem hoverAnimation="lighten">
+                <WButton className="navbar-options" wType="texted" hoverAnimation="text-primary"> 
+                    Name
+                </WButton>
+            </WNavItem>
+            <WNavItem hoverAnimation="lighten">
+                <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
+                    Logout
+                </WButton>
+            </WNavItem >
+        </>
     );
 };
 
@@ -29,13 +36,13 @@ const LoggedOut = (props) => {
     return (
         <>
             <WNavItem hoverAnimation="lighten">
-                <WButton className="navbar-options" onClick={props.setShowLogin} wType="texted" hoverAnimation="text-primary">
-                    Login
+                <WButton className="navbar-options" onClick={props.setShowCreate} wType="texted" hoverAnimation="text-primary"> 
+                    Create Account
                 </WButton>
             </WNavItem>
             <WNavItem hoverAnimation="lighten">
-                <WButton className="navbar-options" onClick={props.setShowCreate} wType="texted" hoverAnimation="text-primary"> 
-                    Sign Up 
+                <WButton className="navbar-options" onClick={props.setShowLogin} wType="texted" hoverAnimation="text-primary">
+                    Login
                 </WButton>
             </WNavItem>
         </>
