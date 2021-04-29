@@ -2,7 +2,9 @@ import React from 'react'
 
 const Welcome = (props) => {
     return(
-        <div>hello</div>
+        <div className="welcome">
+            <p>The World Data Mapper</p>
+        </div>
     )
 }
 

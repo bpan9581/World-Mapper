@@ -1,8 +1,8 @@
 import React, { useState, useEffect } 	from 'react';
-import Logo 							from '../navbar/Logo';
-import NavbarOptions 					from '../navbar/NavbarOptions';
-import Login 							from '../modals/Login';
-import CreateAccount 					from '../modals/CreateAccount';
+import Logo 							from './navbar/Logo';
+import NavbarOptions 					from './navbar/NavbarOptions';
+import Login 							from './modals/Login';
+import CreateAccount 					from './modals/CreateAccount';
 import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 
@@ -48,7 +48,7 @@ const Homescreen = (props) => {
 
 
 	return (
-		<WLayout wLayout="header-lside">
+		<div>
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
@@ -75,8 +75,7 @@ const Homescreen = (props) => {
 			{
 				showLogin && (<Login fetchUser={props.fetchUser} showLogin = {showLogin} setShowLogin={setShowLogin} />)
 			}
-
-		</WLayout>
+		</div> 
 	);
 };
 
