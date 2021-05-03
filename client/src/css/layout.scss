@@ -10,8 +10,85 @@ html {
 
 .welcome {
     text-align: center;
-    margin-top: 40%;
-    color: rgb(202, 48, 48);
+    color: rgb(255, 255, 255);
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+#img {
+    margin-top: 5%;
+    height: 500px;
+    width: 500px;
+}
+
+#img2 {
+    margin-top: 25px;
+    height: 500px;
+}
+
+.map-container {
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 2;
+    text-align: center;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 2.5%;
+    grid-template-columns: 50% 50%;
+}
+
+.map-header {
+    padding-top: 20px;
+    grid-column: 1/ span 2;
+    height: 60px;
+    border-top: 4px solid var(--primary-red);
+    
+}
+
+.user-maps {
+    height: 600px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.map-create {
+    margin-top: 32px;
+    height: 40px;
+    padding-top: 10px;
+}
+
+.map-entry {
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-columns: 70% 15% 15%;
+}
+
+.map-entry-item{
+    min-height: 60px;
+    padding-top: 20px;
+    text-decoration: none;
+}
+
+.map-entry-text{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 5%;
+    max-width: 90%;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.map-entry-delete{
+    min-height: 60px;
+    padding-top: 20px;
+    grid-column: 3;
+}
+
+.map-entry-edit{
+    min-height: 60px;
+    padding-top: 20px;
+    grid-column: 2;
 }
 
 .modal-input {
@@ -54,3 +131,105 @@ html {
     position: fixed;
     width: fit-content;
 }
+
+.spreadsheet-container {
+    width: 85%;
+    margin-left: 7.5%;
+    margin-top: 2%;
+    height: 80%;
+}
+
+.spreadsheet-header{
+    display: flex;
+    text-align: center;
+    height: 40px;
+    position: sticky;
+}
+
+.spreadsheet-body {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.spreadsheet-top {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.header-col {
+    display: flex;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.size1 {
+    width: 15%;
+    padding-left: 6%;
+}
+
+.size2 {
+    width: 20%;
+    padding-left: 7.5%;
+}
+
+.size3 {
+    width: 25%;
+    padding-left: 9%;
+}
+
+.size4 {
+    width: 16%;
+    padding-right: 1.5%;
+    border-right: solid 1px black;
+}
+
+.size5 {
+    width: 2%;
+    border-right: solid 1px black;
+}
+
+.size6 {
+    width: 15%;
+}
+
+.size7 {
+    width: 20%;
+    border-right: solid 1px black;
+}
+
+.size8 {
+    width: 25%;
+    border-left: solid 1px black;
+}
+
+
+.spreadsheet-button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 12%;
+}
+
+.spreadsheet-body::-webkit-scrollbar, .wsidebar::-webkit-scrollbar {
+    width: 5px;
+	height: 8px;
+}
+
+.spreadsheet-region-name {
+    display: flex;
+}
+.name{
+    padding-left: 10px;
+}
+
+.spreadsheet-entry-items{
+    display: flex;
+    text-align: center;
+    height: 35px;   
+    border-bottom: solid 1px black;
+}
+
+.spreadsheet-entry-item{
+    padding-top: 9px;
+}
+

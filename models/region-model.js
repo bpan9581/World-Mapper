@@ -2,10 +2,14 @@ const { model, Schema, ObjectId } = require('mongoose');
 
 const regionSchema = new Schema(
 	{
-		id: {
-			type: Number,
+        _id: {
+			type: ObjectId,
 			required: true
 		},
+        name: {
+            type: String,
+            require: true
+        },
 		owner: {
 			type: String,
 			required: true
@@ -15,22 +19,31 @@ const regionSchema = new Schema(
             required: true
         },
         sister: {
-            type: [String]
+            type: Number,
+            required: false
         },
         children: {
-            type: [String],
-            required: true
+            type: [ObjectId],
+            required: false
         },
         landmark: {
-            type: String
+            type: [String],
+            required: false
         },
         capital: {
-            type: String
+            type: String,
+            required: false
         },
         leader: {
-            type: String
-        }
-	}
+            type: String,
+            required: false
+        },
+        parent: {
+			type: ObjectId,
+			required: false
+		},
+	},
+    { timestamps: true }
 );
 
 const Region = model('Region', regionSchema);

@@ -3,7 +3,7 @@ import React from 'react';
 const Logo = (props) => {
     return (
         <div className='logo'>
-            The World Data Mapper
+            The World<br/>Data Mapper
         </div>
     );
 };

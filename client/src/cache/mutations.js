@@ -29,84 +29,26 @@ export const LOGOUT = gql`
 	}
 `;
 
-export const ADD_ITEM = gql`
-	mutation AddItem($item: ItemInput!, $_id: String!, $index: Int!) {
-		addItem(item: $item, _id: $_id, index: $index)
+export const ADD_MAP = gql `
+	mutation AddMap($map: MapInput!) {
+		addMap(map: $map)
 	}
 `;
 
-export const DELETE_ITEM = gql`
-	mutation DeleteItem($itemId: String!, $_id: String!) {
-		deleteItem(itemId: $itemId, _id: $_id) {
-			_id
-			id
-			description
-			due_date
-			assigned_to
-			completed
-		}
+export const DELETE_REGION = gql`
+	mutation DeleteRegion($_id: String!){
+		deleteRegion(_id: $_id)
 	}
 `;
 
-export const UPDATE_ITEM_FIELD = gql`
-	mutation UpdateItemField($_id: String!, $itemId: String!, $field: String!, $value: String!, $flag: Int!) {
-		updateItemField(_id: $_id, itemId: $itemId, field: $field, value: $value, flag: $flag) {
-			_id
-			id
-			description
-			due_date
-			assigned_to
-			completed
-		}
+export const ADD_REGION = gql `
+	mutation AddRegion($_id: String!, $map: MapInput!) {
+		addRegion(_id: $_id, map: $map)
 	}
 `;
 
-export const REORDER_ITEMS = gql`
-	mutation ReorderItems($_id: String!, $itemId: String!, $direction: Int!) {
-		reorderItems(_id: $_id, itemId: $itemId, direction: $direction) {
-			_id
-			id
-			description
-			due_date
-			assigned_to
-			completed
-		}
-	}
-`;
-
-export const SORT_ITEMS = gql`
-	mutation SortItems($_id: String!, $direction: Int!, $op: String!) {
-		sortItems(_id: $_id direction: $direction, op: $op) {
-			_id
-			id
-			description
-			due_date
-			assigned_to
-			completed
-		}
-	}
-`;
-
-export const ADD_TODOLIST = gql`
-	mutation AddTodolist($todolist: TodoInput!) {
-		addTodolist(todolist: $todolist) 
-	}
-`;
-
-export const DELETE_TODOLIST = gql`
-	mutation DeleteTodolist($_id: String!) {
-		deleteTodolist(_id: $_id)
-	}
-`;
-
-export const UPDATE_TODOLIST_FIELD = gql`
-	mutation UpdateTodolistField($_id: String!, $field: String!, $value: String!) {
-		updateTodolistField(_id: $_id, field: $field, value: $value)
-	}
-`;
-
-export const MOVE_TOP = gql`
-	mutation MoveTop($_id: String!) {
-		moveTop(_id: $_id) 
+export const UPDATE_REGION_FIELD = gql `
+	mutation UpdateRegion($_id: String!, $field: String!, $value: String!){
+		updateRegion(_id: $_id, field: $field, value: $value)
 	}
 `;

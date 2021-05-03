@@ -43,6 +43,7 @@
 	--blue-gray: #7e8084;
 	--darkblue-gray: #2b2e36;
     --warm-black: #322d2d;
+    --primary-red: rgb(219, 65, 65);
 }
 
 html, body {
@@ -75,11 +76,12 @@ html, body {
 }
 
 .logo {
-	color: $primary-color;
-    font-size: 1.5rem;
+	color: var(--primary-red);
+    font-size: 1.25rem;
     font-family: "Roboto Mono", monospace;
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
 } 
 
 .modal-error {
@@ -105,3 +107,84 @@ html, body {
     color: $text-color;
 }
 
+.map-header {
+    background-color: rgb(30, 30, 30);
+    color: whitesmoke;
+}
+.user-maps {
+    background-color: rgb(240, 200, 210);
+}
+
+.user-maps::-webkit-scrollbar, .wsidebar::-webkit-scrollbar {
+	width: 5px;
+	height: 8px;
+	background-color: rgb(210, 150, 170);
+}
+
+
+.map-create {
+    background-color: rgb(210, 45, 45) ;
+    color: whitesmoke;
+}
+
+.map-create:hover {
+    background-color: rgb(160, 30, 30) ;
+    color: white;
+    cursor: pointer;
+}
+
+.map-right-body {
+    background-color: whitesmoke;    
+}
+
+.map-entry:hover {
+    cursor: pointer;
+    background-color:  rgb(210, 150, 170);
+}
+
+.map-entry-text {
+    color: rgb(30, 30, 30);
+}
+
+.map-entry-item:hover{
+    background-color:  rgb(175, 100, 130);
+}
+
+.map-entry-edit:hover{
+    background-color:  rgb(175, 100, 130);
+}
+
+.map-entry-delete:hover{
+    background-color:  rgb(175, 100, 130);
+}
+
+.spreadsheet-header{
+    background-color: rgb(210, 45, 45);
+}
+
+.spreadsheet-body {
+    background-color: rgb(220, 220, 220);
+}
+
+.header-col:hover {
+    background-color: rgb(160, 30, 30) ;
+    color: white;
+    cursor: pointer;
+}
+
+.header-col {
+    color: whitesmoke;
+}
+
+.spreadsheet-top {
+    color: whitesmoke;
+}
+
+.spreadsheet-buttons:hover {
+    background-color:  rgb(175, 100, 130);
+    cursor: pointer;
+}
+
+.spreadsheet-entry-item:hover {
+    background-color: gray;
+}

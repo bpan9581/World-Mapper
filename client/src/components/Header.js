@@ -5,6 +5,7 @@ import Login 							from './modals/Login';
 import CreateAccount 					from './modals/CreateAccount';
 import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
+import { Link } from 'react-router-dom';
 
 import WInput from 'wt-frontend/build/components/winput/WInput';
 import { set } from 'mongoose';
@@ -52,9 +53,9 @@ const Homescreen = (props) => {
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
-						<WNavItem>
+						<Link to = {`/maps`}>
 							<Logo className='logo' />
-						</WNavItem>
+						</Link>
 					</ul>
 					<ul>Hello</ul>
 					<ul>Hello</ul>

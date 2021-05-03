@@ -13,7 +13,7 @@ const Delete = (props) => {
     return (
         <WModal className="delete-modal" visible = {props.showDelete} animation="slide-fade-top" cover = {true}>
             <WMHeader className="modal-header" onClose={() => props.setShowDelete(false)}>
-                Delete List?
+                Delete Map?
 			</WMHeader>
 
             <WMFooter>

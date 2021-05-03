@@ -11,21 +11,38 @@ export const GET_DB_USER = gql`
 	}
 `;
 
-export const GET_DB_TODOS = gql`
-	query GetDBTodos {
-		getAllTodos {
+export const GET_DB_REGIONS = gql`
+	query GetDBRegions {
+		getAllRegions{
 			_id
-			id
 			name
 			owner
-			items {
-				_id
-				id
-				description
-				due_date
-				assigned_to
-				completed
-			}
+			map
+			sister
+			children
+			landmark
+			capital
+			leader
+			parent
 		}
 	}
 `;
+
+export const GET_DB_REGION = gql`
+	query GetDBRegions($_id: String!) {
+		getRegionById(_id: $_id){
+			_id
+			name
+			owner
+			map
+			sister
+			children
+			landmark
+			capital
+			leader
+			parent
+		}
+	}
+`;
+
+
