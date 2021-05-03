@@ -24,13 +24,10 @@ const MapEntry = (props) => {
         props.delete(props._id);
     }
 
-    const setActive = () => {
-        props.setActiveRegion(props._id);
-    }
 
     return (
         <div  className = "map-entry">
-            <Link to = {`/maps/${props._id}`}className = "map-entry-item" onClick = {setActive}>
+            <Link to = {`/maps/${props._id}`}className = "map-entry-item" >
             {
                 editing ? <input name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} />
                     :   <div className = "map-entry-text">{props.name}</div>

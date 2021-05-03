@@ -233,3 +233,43 @@ html {
     padding-top: 9px;
 }
 
+.region-viewer-container {
+    display: grid;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1%;
+    grid-template-columns: 2;
+    grid-template-rows: 2;
+}
+
+.stock-photo {
+    width: 350px;
+    height: 220px;
+}
+
+.region-viewer-text {
+    grid-row-start: 2;
+    margin-top: 5%;
+}
+
+.region-viewer-landmark-container {
+    grid-column-start: 2;
+}
+
+.region-viewer-landmark-header {
+    height: 35px;
+    font-weight: bold;
+    font-size: 20pt;
+    text-align: center;
+}
+
+.region-viewer-landmark-body {
+    height: 300%;
+}
+
+.region-viewer-landmark-adder {
+    display: flex;
+    height: 30px;
+    font-size: 15pt;
+}
+

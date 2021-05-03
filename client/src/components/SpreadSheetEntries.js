@@ -17,6 +17,7 @@ const SpreadSheetEntries = (props) => {
 
     }
 
+
     return(
         <div className = "spreadsheet-entry-items">
             <div className = "spreadsheet-entry-item size5" onClick = {deleteRegion}>X</div>
@@ -27,8 +28,10 @@ const SpreadSheetEntries = (props) => {
             <div className = "spreadsheet-entry-item size7" >{region.capital}</div>
             <div className = "spreadsheet-entry-item size7">{region.leader}</div>
             <i className="spreadsheet-entry-item material-icons size6">image</i>
-            {!landmarkCheck ? <div className = "spreadsheet-entry-item size8">None</div> :
-                <div className = "spreadsheet-entry-item size8">{region.landmark}</div>}
+            <Link  to = {`/maps/${region._id}/region-viewer`}className = "spreadsheet-entry-item size8">
+                {!landmarkCheck ? <div>None</div> :
+                    <div>{region.landmark}</div>} 
+            </Link>
         </div>
     )
 }

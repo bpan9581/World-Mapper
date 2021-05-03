@@ -44,21 +44,16 @@ const Homescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowCreate(!showCreate);
 	};
-
-
-
-
+	
 	return (
 		<div>
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
-						<Link to = {`/maps`}>
+						<Link to = {`/maps`} onClick = {props.clearPath}>
 							<Logo className='logo' />
 						</Link>
 					</ul>
-					<ul>Hello</ul>
-					<ul>Hello</ul>
 					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} auth={auth} 

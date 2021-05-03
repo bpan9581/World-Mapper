@@ -7,14 +7,13 @@ import { jsTPS } from './utils/jsTPS';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { set } from 'mongoose';
 import SpreadSheet from './components/SpreadSheet';
+import Regions from './components/Regions'
 
 import { useMutation, useQuery } 		from '@apollo/client';
 
 const App = () => {
 	let user = null;
 	let transactionStack = new jsTPS();
-	const [activeRegion, setActiveRegion] = useState({});
-	const [path, setPath] = useState({});
 
 	const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 
@@ -31,14 +30,10 @@ const App = () => {
 		setRegions(e);
 	}
 
-	const setActiveReg = (region) =>{
-		setActiveRegion(region);
-	}
-
 	return (
 		<Router>
 			<div>
-				<Header fetchUser={refetch} user={user} />
+				<Header fetchUser={refetch} user={user}/>
 				<Redirect exact from="/" to={ {pathname: "/welcome"} } />
 				{check ? <Redirect exact from="/welcome" to={ {pathname: "/maps"} } /> : <div></div>}
 				{!check ? <Redirect exact from="/" to={ {pathname: "/welcome"} } /> : <div></div>}
@@ -48,10 +43,11 @@ const App = () => {
 						() =>
 						<Map 
 							fetchUser = {refetch}
-							user = {user} maps = {sendRegions} setActiveReg = {setActiveReg}
+							user = {user} maps = {sendRegions}
 						/>
 					}/>
-					<Route path = "/maps/:_id"><SpreadSheet  user = {user} regions = {regions} test = {activeRegion}/></Route>
+					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions}/></Route>
+					<Route path = "/maps/:_id/region-viewer"><Regions/></Route>
 				</Switch>
 			</div>
 		</Router>

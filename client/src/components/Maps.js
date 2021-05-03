@@ -7,6 +7,7 @@ import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
 import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import {} 				from '../utils/jsTPS';
 import {GET_DB_REGIONS} from '../cache/queries'
+import { use } from 'passport';
 
 const Maps = (props) => {
     let maps = [];
@@ -67,6 +68,7 @@ const Maps = (props) => {
 		props.setActiveReg(region)
 	}
 
+	useEffect(() => {refetch()}, [])
 
     return(
         <div className = "map-container">
@@ -75,7 +77,7 @@ const Maps = (props) => {
                     <MapEntry
                         name = {map.name} _id = {map._id}
                         id = {map.id} map = {map} delete = {deleteRegion}
-						updateRegionField = {updateRegion} setActiveRegion = {setActiveRegion}
+						updateRegionField = {updateRegion} setPath = {props.setPath}
                     />
                 ))}</div>
             <div className = "map-right-body">

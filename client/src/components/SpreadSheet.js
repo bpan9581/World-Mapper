@@ -26,6 +26,8 @@ const SpreadSheet = (props) => {
     region.forEach(e => name = e.name )
     let children;
     region.forEach(e => children = e.children )
+    let parent;
+    region.forEach(e => parent = e.parent)
 
     const deleteRegion = (_id) => {
         DeleteRegion({ variables: { _id: _id}, refetchQueries: [{ query: queries.GET_DB_REGIONS }]});
@@ -50,6 +52,8 @@ const SpreadSheet = (props) => {
             elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries region = {region} deleteRegion = {deleteRegion}/> )));
         }
     }   
+    
+    useEffect(() => {refetch()}, [])
 
     return (
         <div className="spreadsheet-container">
@@ -89,6 +93,7 @@ const SpreadSheet = (props) => {
             <div className= "spreadsheet-body">
                 {elements}               
             </div>
+            <div>{parent ? <div>{parent}</div> : <div></div>}</div>
         </div>
     )
 }
