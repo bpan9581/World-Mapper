@@ -36,7 +36,7 @@ export const ADD_MAP = gql `
 `;
 
 export const UPDATE = gql`
-	mutation Update($_id: _id, $email: String!, $password: String!, $firstName: String!, $lastName: String!) {
+	mutation Update($_id: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!) {
 		update(_id: $_id, email: $email, password: $password, firstName: $firstName, lastName: $lastName)
 	}
 `;

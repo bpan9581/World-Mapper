@@ -87,7 +87,8 @@ module.exports = {
 		update: async (_, args) => {
 			const { _id, email, password, firstName, lastName } = args;
 			const alreadyRegistered = await User.findOne({email: email});
-			if(alreadyRegistered._id !== _id){
+			
+			if(alreadyRegistered && alreadyRegistered._id === new ObjectId(_id)){
 				console.log('User with that email already registered.');
 				return("Email Already Exist");
 			}

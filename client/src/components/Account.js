@@ -2,12 +2,14 @@ import React                                from 'react';
 import * as mutations 					from '../cache/mutations';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { Link } from 'react-router-dom';
+import {GET_DB_USER} from '../cache/queries'
 
 const Account = (props) => {
     const [Update] = useMutation(mutations.UPDATE);
 
     const updateUser = (fname, lname, email, password) => {
-        Update({ variables: { _id: props._id, firstName: fname, lastName: lname, email: email, password: password}});
+        let test = Update({ variables: { _id: props._id, email: email, password: password, firstName: fname, lastName: lname},  refetchQueries: [{ query: GET_DB_USER }]});
+        console.log(test)
     }
 
     const getValues = () => {
@@ -15,8 +17,16 @@ const Account = (props) => {
         var lname = document.getElementById("lname").value;
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
-        console.log(fname, lname, email, password)
         updateUser(fname, lname, email, password);
+    }
+
+    const togglePassword = () => {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+  }
     }
 
     return(
@@ -42,7 +52,7 @@ const Account = (props) => {
                     </div>
                     <div className = "account-field-items">
                         <div className = "account-field-text">Show Password</div>
-                        <input type = "checkbox"/>
+                        <input type = "checkbox" onClick = {togglePassword}/>
                     </div>
                 </div>
                 <div className="account-buttons">
