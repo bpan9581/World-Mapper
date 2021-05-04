@@ -7,9 +7,11 @@ import {GET_DB_USER} from '../cache/queries'
 const Account = (props) => {
     const [Update] = useMutation(mutations.UPDATE);
 
-    const updateUser = (fname, lname, email, password) => {
-        let test = Update({ variables: { _id: props._id, email: email, password: password, firstName: fname, lastName: lname},  refetchQueries: [{ query: GET_DB_USER }]});
-        console.log(test)
+    const updateUser = async (fname, lname, email, password) => {
+        const {data} = await Update({ variables: { _id: props._id, email: email, password: password, firstName: fname, lastName: lname},  refetchQueries: [{ query: GET_DB_USER }]});
+        if(data){
+            alert(data.update)
+        }
     }
 
     const getValues = () => {
