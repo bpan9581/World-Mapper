@@ -2,6 +2,7 @@ import React                                from 'react';
 import { LOGOUT }                           from '../../cache/mutations';
 import { useMutation, useApolloClient }     from '@apollo/client';
 import { WButton, WNavItem }                from 'wt-frontend';
+import { Link }from 'react-router-dom';
 
 const LoggedIn = (props) => {
     const client = useApolloClient();
@@ -19,9 +20,11 @@ const LoggedIn = (props) => {
     return (
         <>
             <WNavItem hoverAnimation="lighten">
-                <WButton className="navbar-options" wType="texted" hoverAnimation="text-primary"> 
-                    Name
-                </WButton>
+                <Link to = "/account">
+                    <WButton className="navbar-options" wType="texted" hoverAnimation="text-primary"> 
+                        {props.name}
+                    </WButton>
+                </Link>
             </WNavItem>
             <WNavItem hoverAnimation="lighten">
                 <WButton className="navbar-options" onClick={handleLogout} wType="texted" hoverAnimation="text-primary">
@@ -55,7 +58,7 @@ const NavbarOptions = (props) => {
         <>
             {
                 props.auth === false ? <LoggedOut setShowLogin={props.setShowLogin} setShowCreate={props.setShowCreate} />
-                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} />
+                : <LoggedIn fetchUser={props.fetchUser} setActiveList={props.setActiveList} logout={props.logout} name = {props.name}/>
             }
         </>
 

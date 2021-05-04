@@ -6,7 +6,7 @@ const typeDefs = gql `
 		owner: String!
         name: String!
         map: Boolean!
-		sister: Int
+		sister: [String]
         children: [String]
         landmark: [String]
         capital: String

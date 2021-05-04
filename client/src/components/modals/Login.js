@@ -32,6 +32,10 @@ const Login = (props) => {
 		};
 	};
 
+	const handleCancel = () => {
+		props.setShowLogin(false)
+	}
+
 
 	return (
         // Replace div with WModal
@@ -58,7 +62,10 @@ const Login = (props) => {
 
 					</div>
 			}
-			<div>
+			<div className = "ugh">
+				<WButton className="modal-button" onClick={handleCancel} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="danger">
+					Cancel
+				</WButton>
 				<WButton className="modal-button" onClick={handleLogin} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
 					Login
 				</WButton>

@@ -19,7 +19,7 @@ const regionSchema = new Schema(
             required: true
         },
         sister: {
-            type: Number,
+            type: [ObjectId],
             required: false
         },
         children: {

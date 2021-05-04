@@ -40,6 +40,10 @@ const CreateAccount = (props) => {
 		};
 	};
 
+	const handleCancel = () => {
+		props.setShowCreate(false);
+	}
+
 	return (
         // Replace div with WModal
 
@@ -78,9 +82,14 @@ const CreateAccount = (props) => {
 						/>
 					</div>
 			}
-			<WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
-				Submit
-			</WButton>
+			<div className = "ugh">
+				<WButton className="modal-button" onClick={handleCancel} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="danger">
+					Cancel
+				</WButton>
+				<WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
+					Submit
+				</WButton>
+			</div>
 		</WModal>
 	);
 }

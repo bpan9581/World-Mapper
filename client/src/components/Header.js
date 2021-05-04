@@ -1,17 +1,14 @@
-import React, { useState, useEffect } 	from 'react';
+import React, { useState } 	from 'react';
 import Logo 							from './navbar/Logo';
 import NavbarOptions 					from './navbar/NavbarOptions';
 import Login 							from './modals/Login';
 import CreateAccount 					from './modals/CreateAccount';
-import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
+import { WNavbar } 	from 'wt-frontend';
+import { WLHeader } from 'wt-frontend';
 import { Link } from 'react-router-dom';
 
-import WInput from 'wt-frontend/build/components/winput/WInput';
-import { set } from 'mongoose';
 
-
-const Homescreen = (props) => {
+const Header = (props) => {
 
 	const [showLogin, toggleShowLogin] 		= useState(false);
 	const [showCreate, toggleShowCreate] 	= useState(false);
@@ -44,13 +41,16 @@ const Homescreen = (props) => {
 		toggleShowLogin(false);
 		toggleShowCreate(!showCreate);
 	};
-	
+
+
+
+
 	return (
 		<div>
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
-						<Link to = {`/maps`} onClick = {props.clearPath}>
+						<Link to = {`/maps`}>
 							<Logo className='logo' />
 						</Link>
 					</ul>
@@ -58,6 +58,7 @@ const Homescreen = (props) => {
 						<NavbarOptions
 							fetchUser={props.fetchUser} auth={auth} 
 							setShowCreate={setShowCreate} setShowLogin={setShowLogin}
+							name = {props.name}
 						/>
 					</ul>
 				</WNavbar>
@@ -69,10 +70,10 @@ const Homescreen = (props) => {
 			}
 
 			{
-				showLogin && (<Login fetchUser={props.fetchUser} showLogin = {showLogin} setShowLogin={setShowLogin} />)
+				showLogin && (<Login fetchUser={props.fetchUser} showLogin = {showLogin} setShowLogin={setShowLogin}/>)
 			}
 		</div> 
 	);
 };
 
-export default Homescreen;
+export default Header;
