@@ -12,6 +12,9 @@ const SpreadSheet = (props) => {
     const [DeleteRegion] = useMutation(mutations.DELETE_REGION);
 	const [UpdateRegion] = useMutation(mutations.UPDATE_REGION_FIELD);
 
+    let test = {};
+    test = props.activeRegion;
+
     let regions = [];
     const { loading, error, data, refetch } = useQuery(queries.GET_DB_REGIONS);
 	if(loading) { console.log(loading, 'loading'); }
@@ -19,15 +22,6 @@ const SpreadSheet = (props) => {
 	if(data) { 
 		regions = data.getAllRegions; 
 	}
-
-
-    const region = Object.values(regions).filter(region => region._id === _id);
-    let name;
-    region.forEach(e => name = e.name )
-    let children;
-    region.forEach(e => children = e.children )
-    let parent;
-    region.forEach(e => parent = e.parent)
 
     const deleteRegion = (_id) => {
         DeleteRegion({ variables: { _id: _id}, refetchQueries: [{ query: queries.GET_DB_REGIONS }]});
@@ -41,15 +35,21 @@ const SpreadSheet = (props) => {
 			owner: props.user._id,
 			children: [],
 		}
+        console.log(test)
 		const { data } = await AddRegion({ variables: {_id: _id, map: map }});
 		map._id = data.addRegion;
 		refetch();
     }
 
+    const editItem = async (_id, field, value, preEdit) => {
+        UpdateRegion({ variables: { _id: _id, field: field, value: value}, refetchQueries: [{ query: queries.GET_DB_REGIONS }]});
+		refetch();
+    }
+
     const elements = []
-    if(children){
-        for(var i = 0; i < children.length; i++){
-            elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries region = {region} deleteRegion = {deleteRegion}/> )));
+    if(test.children){
+        for(var i = 0; i < test.children.length; i++){
+            elements.push(regions.filter(x => x._id === test.children[i]).map( region => (<SpreadSheetEntries region = {region} children = {test.children} setChildren = {props.setChildren(test.children)} deleteRegion = {deleteRegion} editItem = {editItem}/> )));
         }
     }   
     
@@ -65,35 +65,20 @@ const SpreadSheet = (props) => {
                 </div>
                 <div className = "spreadsheet-region-name">
                     <>Region Name:</>
-                    <div className = "name">{name}</div>
+                    <div className = "name">{test.name}</div>
                 </div>
             </div>
             <div className="spreadsheet-header">
-                <div className = "header-col size2">
-                    <div className = "center">Name</div>
-                    <i className="material-icons">expand_more</i>
-                </div>
-                <div className = "header-col size2">
-                    <div>Capital</div>
-                    <i className="material-icons">expand_more</i>
-                </div>
-                <div className = "header-col size2">
-                    <div>Leader</div>
-                    <i className="material-icons">expand_more</i>
-                </div>
-                <div className = "header-col size1">
-                    <div>Flag</div>
-                    <i className="material-icons">expand_more</i>
-                </div>
-                <div className = "header-col size3">
-                    <div>Landmarks</div>
-                    <i className="material-icons">expand_more</i>
-                </div>
+                <div className = "header-col size2">Name</div>
+                <div className = "header-col size2">Capital</div>
+                <div className = "header-col size2">Leader</div>
+                <div className = "header-col size1">Flag</div>
+                <div className = "header-col size3">Landmarks</div>
             </div>
             <div className= "spreadsheet-body">
                 {elements}               
             </div>
-            <div>{parent ? <div>{parent}</div> : <div></div>}</div>
+            <div>{test.parent ? <div>{test.parent}</div> : <div></div>}</div>
         </div>
     )
 }

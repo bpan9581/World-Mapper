@@ -72,6 +72,14 @@ module.exports = {
 		deleteRegion: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
+			const region = await Region.findOne({_id: objectId});
+			if(region.parent){
+				const parent = await Region.findOne({_id: region.parent});
+				const children = parent.children;
+				const index = children.indexOf(objectId)
+				children.splice(index, 1)
+				const updated = await Region.updateOne({_id: region.parent}, {children: children});
+			}
 			const deleted = await Region.deleteOne({_id: objectId})
 			if(deleted) return ("deleted");
 			else return ("no");

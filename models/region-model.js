@@ -18,10 +18,6 @@ const regionSchema = new Schema(
             type: Boolean,
             required: true
         },
-        sister: {
-            type: [ObjectId],
-            required: false
-        },
         children: {
             type: [ObjectId],
             required: false

@@ -9,12 +9,13 @@ import SpreadSheet from './components/SpreadSheet';
 import Regions from './components/Regions';
 import Account from './components/Account';
 
-import { useMutation, useQuery } 		from '@apollo/client';
-import { use } from 'passport';
+import { useQuery } 		from '@apollo/client';
 
 const App = () => {
 	let user = null;
 	let transactionStack = new jsTPS();
+	const [activeRegion, setActiveRegion] = useState({});
+	const [activeChildren, setActiveChildren] = useState({});
 
 	const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 
@@ -40,6 +41,14 @@ const App = () => {
 		_id = user._id;
 	}
 
+	const test = (region) => {
+		setActiveRegion(region)
+	}
+
+	const setChildren = (children) => {
+		setActiveChildren(children);
+	}
+
 	useEffect(() => {refetch()}, [])
 
 	return (
@@ -56,10 +65,12 @@ const App = () => {
 						<Map 
 							fetchUser = {refetch}
 							user = {user} maps = {sendRegions}
+							setActiveRegion = {test}
+							
 						/>
 					}/>
-					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions}/></Route>
-					<Route path = "/maps/:_id/region-viewer"><Regions/></Route>
+					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions} setChildren = {setChildren} activeRegion = {activeRegion}/></Route>
+					<Route path = "/maps/:_id/region-viewer"><Regions children = {activeChildren}/></Route>
 					<Route path = "/account"><Account firstName = {firstName} 
 						lastName = {lastName} email = {email} _id = {_id}
 					/></Route>

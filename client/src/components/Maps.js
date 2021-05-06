@@ -3,11 +3,8 @@ import React, { useState, useEffect } 	from 'react';
 import MapEntry from './MapEntry'
 import * as mutations 					from '../cache/mutations';
 import { useMutation, useQuery } 		from '@apollo/client';
-import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WLSide } from 'wt-frontend';
 import {} 				from '../utils/jsTPS';
 import {GET_DB_REGIONS} from '../cache/queries'
-import { use } from 'passport';
 
 const Maps = (props) => {
     let maps = [];
@@ -63,9 +60,8 @@ const Maps = (props) => {
 		refetch();
 	};
 
-	const setActiveRegion = (_id) => {
-		let region = maps.filter(x => x._id === _id)
-		props.setActiveReg(region)
+	const setActiveRegion = (region) => {
+		props.setActiveRegion(region)
 	}
 
 	useEffect(() => {refetch()}, [])
@@ -77,7 +73,7 @@ const Maps = (props) => {
                     <MapEntry
                         name = {map.name} _id = {map._id}
                         id = {map.id} map = {map} delete = {deleteRegion}
-						updateRegionField = {updateRegion} setPath = {props.setPath}
+						updateRegionField = {updateRegion} setActiveRegion = {setActiveRegion}
                     />
                 ))}</div>
             <div className = "map-right-body">

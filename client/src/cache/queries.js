@@ -18,7 +18,6 @@ export const GET_DB_REGIONS = gql`
 			name
 			owner
 			map
-			sister
 			children
 			landmark
 			capital
@@ -35,7 +34,6 @@ export const GET_DB_REGION = gql`
 			name
 			owner
 			map
-			sister
 			children
 			landmark
 			capital

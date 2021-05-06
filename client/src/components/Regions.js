@@ -4,12 +4,12 @@ import {GET_DB_REGION} from '../cache/queries'
 import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } 		from '@apollo/client';
 
-const Regions = () => {
+const Regions = (props) => {
     const { _id } = useParams();
+    const clickDisabled = () => { };
+
     let region = [];
-    const { loading, error, data, refetch } = useQuery(GET_DB_REGION, { variables: {_id: _id} });
-	if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
+    const { data, refetch } = useQuery(GET_DB_REGION, { variables: {_id: _id} });
 	if(data) { 
 		region = data.getRegionById; 
 	}
@@ -18,13 +18,17 @@ const Regions = () => {
 
     let parentName;
     let parentId;
-    const { loading: loading1, error: error1, data: data1, refetch: refetch1 } = useQuery(GET_DB_REGION, { variables: {_id: region.parent} });
-	if(loading1) { console.log(loading, 'loading'); }
-	if(error1) { console.log(error, 'error'); }
+    const { error: error1, data: data1, refetch: refetch1 } = useQuery(GET_DB_REGION, { variables: {_id: region.parent} });
 	if(data1) { 
         parentId = data1.getRegionById._id;
 		parentName = data1.getRegionById.name; 
 	}
+
+    let children = props.children;
+    let index = children.toString().indexOf(_id)/25;
+    console.log(children.length)
+    let prevButtonStyle = index === 0 ? "material-icons viewer-buttons-disabled" : "material-icons viewer-buttons"
+    let nextButtonStyle = index === children.length - 1 ? "material-icons viewer-buttons-disabled" : "material-icons viewer-buttons"
 
     return(
         <div className = "region-viewer-container">
@@ -62,6 +66,13 @@ const Regions = () => {
                     <div className = "landmark-adder">+</div>
                     <input className = "new-landmark"/>
                 </div>
+            </div>
+            <div className = "absolute-sister">
+                {index === 0 ? <i className = {`${prevButtonStyle}`}>arrow_back</i> :
+                 <Link to = {`/maps/${children[index-1]}/region-viewer`} className = {`${prevButtonStyle}`}>arrow_back</Link>}
+                <div className = "whitespace"></div>
+                {index === children.length - 1? <i className = {`${nextButtonStyle}`}>arrow_forward</i> :
+                 <Link to = {`/maps/${children[index+1]}/region-viewer`} className = {`${nextButtonStyle}`}>arrow_forward</Link>}
             </div>
         </div>
     )

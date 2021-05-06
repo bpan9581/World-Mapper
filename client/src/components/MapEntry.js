@@ -1,5 +1,4 @@
 import React, { useState }  from 'react';
-import { WNavItem, WInput, WButton } from 'wt-frontend';
 import { Link } from 'react-router-dom';
 
 
@@ -24,10 +23,14 @@ const MapEntry = (props) => {
         props.delete(props._id);
     }
 
+    const setActiveRegion = () => {
+        props.setActiveRegion(props.map);
+    }
+
 
     return (
         <div  className = "map-entry">
-            <Link to = {`/maps/${props._id}`}className = "map-entry-item" >
+            <Link to = {`/maps/${props._id}`}className = "map-entry-item" onClick = {setActiveRegion} >
             {
                 editing ? <input name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} />
                     :   <div className = "map-entry-text">{props.name}</div>

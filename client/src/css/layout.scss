@@ -2,6 +2,7 @@
     height: 100vh;
 }
 
+
 html {
     height: 100%;
 }
@@ -140,7 +141,6 @@ html {
     width: 85%;
     margin-left: 7.5%;
     margin-top: 2%;
-    height: 80%;
 }
 
 .spreadsheet-header{
@@ -151,8 +151,11 @@ html {
 }
 
 .spreadsheet-body {
-    height: 600px;
-    overflow-y: scroll;
+    height: 700px;
+    overflow-y: auto;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
 }
 
 .spreadsheet-top {
@@ -162,29 +165,29 @@ html {
 }
 
 .header-col {
-    display: flex;
     padding-top: 10px;
     font-weight: bold;
+    text-align: center;
 }
 
 .size1 {
     width: 15%;
-    padding-left: 6%;
+    overflow-x: auto;
 }
 
 .size2 {
     width: 20%;
-    padding-left: 7.5%;
+    overflow-x: auto;
 }
 
 .size3 {
     width: 25%;
-    padding-left: 9%;
+    overflow-x: auto;
 }
 
 .size4 {
     width: 16%;
-    padding-right: 1.5%;
+    text-align: center;
     border-right: solid 1px black;
 }
 
@@ -215,13 +218,14 @@ html {
 }
 
 .spreadsheet-body::-webkit-scrollbar, .wsidebar::-webkit-scrollbar {
-    width: 5px;
-	height: 8px;
+    display: none;
+    scrollbar-width: "none";
 }
 
 .spreadsheet-region-name {
     display: flex;
 }
+
 .name{
     padding-left: 10px;
 }
@@ -234,7 +238,7 @@ html {
 }
 
 .spreadsheet-entry-item{
-    padding-top: 9px;
+    padding-top: 8px;
 }
 
 .region-viewer-container {
@@ -277,7 +281,7 @@ html {
 }
 
 .region-viewer-landmark-body {
-    height: 300%;
+    height: 325%;
 }
 
 .region-viewer-landmark-adder {
@@ -338,3 +342,13 @@ html {
     font-weight: bold;
 }
 
+.absolute-sister{
+    position: absolute;
+    top: 20px;
+    left: 48%;
+    display: flex;
+}
+
+.whitespace {
+    width: 20px;
+}

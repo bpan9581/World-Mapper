@@ -158,6 +158,9 @@ html, body {
     background-color:  rgb(175, 100, 130);
 }
 
+.spreadsheet-container{
+}
+
 .spreadsheet-header{
     background-color: rgb(210, 45, 45);
 }
@@ -187,6 +190,7 @@ html, body {
 
 .spreadsheet-entry-item:hover {
     background-color: gray;
+    cursor: pointer;
 }
 
 .region-viewer-container {
@@ -246,3 +250,19 @@ html, body {
 .account-button {
     cursor: pointer;
 }
+
+.viewer-buttons {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.viewer-buttons:hover {
+    background-color: rgb(125, 125, 125);
+    cursor: pointer;
+}
+
+.viewer-buttons-disabled {
+    color: rgb(30, 30, 30);
+    cursor: default;
+}
+
