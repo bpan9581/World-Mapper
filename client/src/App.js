@@ -16,6 +16,8 @@ const App = () => {
 	let transactionStack = new jsTPS();
 	const [activeRegion, setActiveRegion] = useState({});
 	const [activeChildren, setActiveChildren] = useState({});
+	const [path, setPath] = useState([]);
+	const [parentName, setParent] = useState();
 
 	const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 
@@ -49,6 +51,13 @@ const App = () => {
 		setActiveChildren(children);
 	}
 
+	const setAncestorPath = (path, name) => {
+		setPath(path);
+		setParent(name);
+	}
+
+	console.log(path)
+
 	useEffect(() => {refetch()}, [])
 
 	return (
@@ -69,8 +78,8 @@ const App = () => {
 							
 						/>
 					}/>
-					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions} setChildren = {setChildren} activeRegion = {activeRegion}/></Route>
-					<Route path = "/maps/:_id/region-viewer"><Regions children = {activeChildren}/></Route>
+					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions} setPath = {setAncestorPath} setChildren = {setChildren} activeRegion = {activeRegion}/></Route>
+					<Route path = "/maps/:_id/region-viewer"><Regions parentName = {parentName} path = {path} children = {activeChildren}/></Route>
 					<Route path = "/account"><Account firstName = {firstName} 
 						lastName = {lastName} email = {email} _id = {_id}
 					/></Route>

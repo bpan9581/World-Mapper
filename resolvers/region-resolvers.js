@@ -37,7 +37,8 @@ module.exports = {
 				name: name,
 				owner: owner,
 				map: true,
-				children: children
+				children: children,
+				path: []
 			});
 			const updated = await newMap.save();
 			// const updated = await newList.save();
@@ -49,6 +50,10 @@ module.exports = {
 			const { _id, map } = args;
 			const objectId = new ObjectId();
 			const { id, name, owner, children } = map;
+			const region = await Region.findOne({_id: _id});
+			let path = [];
+			region.path.map(x => path.push(x))
+			path.push(_id)
 			const newMap = new Region({
 				_id: objectId,
 				name: name,
@@ -58,10 +63,10 @@ module.exports = {
 				capital: "None",
 				leader: "None",
 				landmarks: ["None"],
-				parent: _id
+				parent: _id,
+				path: path
 			});
 			const updated = await newMap.save();
-			const region = await Region.findOne({_id: _id});
 			region.children.push(objectId);
 			await region.save();
 			// const updated = await newList.save();
@@ -91,6 +96,15 @@ module.exports = {
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
 			console.log(value);
 			if(updated) return value;
+			else return "";
+		},
+
+		sort: async (_, args) => {
+			const { value, _id } = args;
+			const objectId = new ObjectId(_id);
+			const updated = await Region.updateOne({_id: objectId}, {children: value});
+			console.log(value);
+			if(updated) return value.toString();
 			else return "";
 		},
     }

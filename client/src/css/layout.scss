@@ -352,3 +352,29 @@ html {
 .whitespace {
     width: 20px;
 }
+
+.path {
+    display: flex;
+    position: absolute;
+    top: 18px;
+    left: 200px;
+    font-size: 18pt;
+    max-width: 20%;
+    white-space: nowrap;
+    overflow-x: auto;
+    cursor: pointer;
+}
+
+.path::-webkit-scrollbar, .wsidebar::-webkit-scrollbar {
+    height: 5px;
+    background-color: #aaa;
+    
+}
+.path::-webkit-scrollbar-thumb{
+    background-color: rgb(30, 30, 30);
+}
+
+
+.flex{
+    display: flex;
+}

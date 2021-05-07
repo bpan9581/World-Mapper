@@ -23,12 +23,13 @@ export const GET_DB_REGIONS = gql`
 			capital
 			leader
 			parent
+			path
 		}
 	}
 `;
 
 export const GET_DB_REGION = gql`
-	query GetDBRegions($_id: String!) {
+	query GetDBRegion($_id: String!) {
 		getRegionById(_id: $_id){
 			_id
 			name
@@ -39,6 +40,7 @@ export const GET_DB_REGION = gql`
 			capital
 			leader
 			parent
+			path
 		}
 	}
 `;

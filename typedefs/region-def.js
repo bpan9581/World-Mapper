@@ -11,6 +11,7 @@ const typeDefs = gql `
         capital: String
         leader: String
         parent: String
+        path: [String]
 	}
     
     extend type Query {
@@ -23,6 +24,7 @@ const typeDefs = gql `
         addRegion(_id: String!, map: MapInput!): String
         deleteRegion(_id: String!): String
         updateRegion(_id: String!, field: String, value: String!): String
+        sort(_id: String!, value: [String]!): String
     }
 
     input MapInput{

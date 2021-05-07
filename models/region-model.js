@@ -38,6 +38,10 @@ const regionSchema = new Schema(
 			type: ObjectId,
 			required: false
 		},
+        path: {
+            type: {ObjectId},
+            required: false
+        }
 	},
     { timestamps: true }
 );

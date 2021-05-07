@@ -8,25 +8,21 @@ const Regions = (props) => {
     const { _id } = useParams();
     const clickDisabled = () => { };
 
+    let path = props.path;
+
     let region = [];
+    let parentId;
     const { data, refetch } = useQuery(GET_DB_REGION, { variables: {_id: _id} });
 	if(data) { 
 		region = data.getRegionById; 
+        parentId = data.getRegionById.parent; 
 	}
     let inputValue = "Add New Landmark";
     let length = region.children ? region.children.length : 0;
 
-    let parentName;
-    let parentId;
-    const { error: error1, data: data1, refetch: refetch1 } = useQuery(GET_DB_REGION, { variables: {_id: region.parent} });
-	if(data1) { 
-        parentId = data1.getRegionById._id;
-		parentName = data1.getRegionById.name; 
-	}
 
     let children = props.children;
     let index = children.toString().indexOf(_id)/25;
-    console.log(children.length)
     let prevButtonStyle = index === 0 ? "material-icons viewer-buttons-disabled" : "material-icons viewer-buttons"
     let nextButtonStyle = index === children.length - 1 ? "material-icons viewer-buttons-disabled" : "material-icons viewer-buttons"
 
@@ -40,7 +36,7 @@ const Regions = (props) => {
                 </div>
                 <div className="region-viewer-text-values">
                     <div>Parent Region:</div>
-                    <Link to = {`/maps/${parentId}`}>{parentName}</Link>
+                    <Link to = {`/maps/${parentId}`}>{props.parentName}</Link>
                 </div>
                 <div className="region-viewer-text-values">
                     <div>Region Capital:</div>
@@ -73,6 +69,9 @@ const Regions = (props) => {
                 <div className = "whitespace"></div>
                 {index === children.length - 1? <i className = {`${nextButtonStyle}`}>arrow_forward</i> :
                  <Link to = {`/maps/${children[index+1]}/region-viewer`} className = {`${nextButtonStyle}`}>arrow_forward</Link>}
+            </div>
+            <div className = "path">
+                {path}
             </div>
         </div>
     )

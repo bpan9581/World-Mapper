@@ -1,6 +1,6 @@
 import React                                from 'react';
 import * as mutations 					from '../cache/mutations';
-import { useMutation } 		from '@apollo/client';
+import { useMutation, useQuery } 		from '@apollo/client';
 import { Link } from 'react-router-dom';
 import {GET_DB_USER} from '../cache/queries'
 

@@ -42,7 +42,7 @@ const SpreadSheetEntries = (props) => {
             <div className="spreadsheet-entry-item spreadsheet-entry-item1 size4" >
                 {editingName ?
                     <input onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' />
-                    : <Link to={`/maps/${region._id}`}>{region.name}</Link>}
+                    : <Link to={`/maps/${region._id}`} >{region.name}</Link>}
             </div>
             <i className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
             <div className="spreadsheet-entry-item size7" >
@@ -54,7 +54,7 @@ const SpreadSheetEntries = (props) => {
                     <input onBlur={handleLeaderEdit} autoFocus={true} defaultValue={region.leader} type='text' />
                     : <div onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
             <i className="spreadsheet-entry-item material-icons size1">image</i>
-            <Link onClick = {props.setChildren} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
+            <Link onClick = {props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
                 {!landmarkCheck ? <div>None</div> :
                     <div>{region.landmark}</div>}
             </Link>

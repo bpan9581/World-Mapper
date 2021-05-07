@@ -58,3 +58,9 @@ export const UPDATE_REGION_FIELD = gql `
 		updateRegion(_id: $_id, field: $field, value: $value)
 	}
 `;
+
+export const SORT = gql `
+	mutation Sort($_id: String!, $value: [String]!){
+		sort(_id: $_id, value: $value)
+	}
+`;
