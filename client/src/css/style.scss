@@ -280,4 +280,21 @@ html, body {
     color:#ffc800;
 }
 
+.landmark-text {
+    color: rgb(215, 215, 215);
+}
 
+.landmark-text-container:hover {
+    background-color: rgb(179, 172, 172);
+    color: white;
+}
+
+.landmark-delete{
+    color: rgb(80, 170, 80);
+}
+
+.landmark-delete:hover{
+    color: whitesmoke;
+    background-color: rgb(210, 45, 45);
+    cursor: pointer;
+}

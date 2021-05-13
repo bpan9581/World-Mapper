@@ -99,6 +99,17 @@ module.exports = {
 			else return "";
 		},
 
+		updateRegionLandmark: async (_, args) => {
+			const { field, value, _id } = args;
+			const objectId = new ObjectId(_id);
+			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
+			console.log(value);
+			if(updated) return value;
+			else return "";
+		},
+
+
+
 		sort: async (_, args) => {
 			const { value, _id } = args;
 			const objectId = new ObjectId(_id);

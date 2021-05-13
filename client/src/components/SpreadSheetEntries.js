@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 const SpreadSheetEntries = (props) => {
     let region = props.region;
+    console.log(region.landmark)
 
-    let landmarkCheck = region.landmark === [];
+    let landmarkCheck = region.landmark.length ;
 
     const deleteRegion = () => {
         props.deleteRegion(region._id);
@@ -42,7 +43,7 @@ const SpreadSheetEntries = (props) => {
             <div className="spreadsheet-entry-item spreadsheet-entry-item1 size4" >
                 {editingName ?
                     <input onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' />
-                    : <Link to={`/maps/${region._id}`} >{region.name}</Link>}
+                    : <Link to={`/maps/${region._id}`}  >{region.name}</Link>}
             </div>
             <i className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
             <div className="spreadsheet-entry-item size7" >
@@ -55,8 +56,7 @@ const SpreadSheetEntries = (props) => {
                     : <div onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
             <i className="spreadsheet-entry-item material-icons size1">image</i>
             <Link onClick = {props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
-                {!landmarkCheck ? <div>None</div> :
-                    <div>{region.landmark}</div>}
+                {landmarkCheck > 0 ?  <div className="spreadsheet-entry-text">{region.landmark.join(", ")}</div> : <div>None</div>}
             </Link>
         </div>
     )

@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 const SpreadSheet = (props) => {
     const { _id } = useParams();
     let ancestorPath = [];
+    let pathNames = []
     const [AddRegion] = useMutation(mutations.ADD_REGION);
     const [DeleteRegion] = useMutation(mutations.DELETE_REGION);
 	const [UpdateRegion] = useMutation(mutations.UPDATE_REGION_FIELD);
@@ -72,10 +73,11 @@ const SpreadSheet = (props) => {
         const ancestor = Object.values(regions).filter(region => region._id === e);
         let name;
         ancestor.forEach(e => name = e.name)
+        pathNames.push(name)
         let _id;
         ancestor.forEach(e => _id = e._id)
         if(index === path.length - 1){
-            ancestorPath.push( <Link className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>)
+            ancestorPath.push( <Link className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
         }
         else
         ancestorPath.push( <div className = "flex">
