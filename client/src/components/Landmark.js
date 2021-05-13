@@ -7,7 +7,7 @@ const Landmark = (props) => {
         toggleEdit(false);
         const newLandmark = e.target.value ? e.target.value : 'Untitled';
         const prevLandmark = props.x;
-        props.editItem(newLandmark, prevLandmark);
+        props.editItem(props.index, newLandmark, prevLandmark);
     };
 
     const deleteLandmark = () => {

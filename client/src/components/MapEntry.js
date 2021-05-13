@@ -20,7 +20,7 @@ const MapEntry = (props) => {
     };
 
     const deleteRegion = () =>{
-        props.delete(props._id);
+        props.setShowDelete(props._id);
     }
 
     const setActiveRegion = () => {

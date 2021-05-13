@@ -6,14 +6,15 @@ import WMFooter from 'wt-frontend/build/components/wmodal/WMFooter';
 const Delete = (props) => {
 
     const handleDelete = async () => {
-        props.deleteList(props.activeid);
+        props.deleteRegion(props._id);
+
         props.setShowDelete(false);
     }
 
     return (
         <WModal className="delete-modal" visible = {props.showDelete} animation="slide-fade-top" cover = {true}>
             <WMHeader className="modal-header" onClose={() => props.setShowDelete(false)}>
-                Delete Map?
+                Delete Item?
 			</WMHeader>
 
             <WMFooter>

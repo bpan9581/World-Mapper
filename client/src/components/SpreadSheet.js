@@ -5,6 +5,7 @@ import * as mutations 					from '../cache/mutations';
 import { useMutation, useQuery } 		from '@apollo/client';
 import * as queries from '../cache/queries'
 import { Link } from 'react-router-dom';
+import Delete from './modals/Delete'
 
 
 const SpreadSheet = (props) => {
@@ -15,6 +16,8 @@ const SpreadSheet = (props) => {
     const [DeleteRegion] = useMutation(mutations.DELETE_REGION);
 	const [UpdateRegion] = useMutation(mutations.UPDATE_REGION_FIELD);
     const [Sort] = useMutation(mutations.SORT);
+    const [showDelete, toggleShowDelete] 	= useState(false);
+    const [toDelete, setDeleteRegion] = useState({})
 
     let regions = [];
     let test = [];
@@ -23,6 +26,11 @@ const SpreadSheet = (props) => {
 	if(error) { console.log(error, 'error'); }
 	if(data) { 
 		regions = data.getAllRegions; 
+	}
+
+    const setShowDelete = (_id) => {
+        setDeleteRegion(_id);
+		toggleShowDelete(!showDelete)
 	}
 
 
@@ -65,7 +73,9 @@ const SpreadSheet = (props) => {
     const elements = []
     if(children){
         for(var i = 0; i < children.length; i++){
-            elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries region = {region} children = {children} setChildren = {props.setChildren(children)} setPath = {setP} deleteRegion = {deleteRegion} editItem = {editItem}/> )));
+            elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries 
+                region = {region} children = {children} setChildren = {props.setChildren(children)}
+                 setShowDelete = {setShowDelete} setPath = {setP} deleteRegion = {deleteRegion} editItem = {editItem}/> )));
         }
     }   
 
@@ -143,6 +153,7 @@ const SpreadSheet = (props) => {
             <div className = "path">
             {ancestorPath}
             </div>
+            <div>{showDelete && (<Delete _id = {toDelete} deleteRegion = {deleteRegion} showDelete = {showDelete} setShowDelete={setShowDelete} />)}</div>
         </div>
     )
 }

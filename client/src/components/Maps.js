@@ -5,6 +5,7 @@ import * as mutations 					from '../cache/mutations';
 import { useMutation, useQuery } 		from '@apollo/client';
 import {} 				from '../utils/jsTPS';
 import {GET_DB_REGIONS} from '../cache/queries'
+import Delete from './modals/Delete'
 
 const Maps = (props) => {
     let maps = [];
@@ -20,6 +21,14 @@ const Maps = (props) => {
 	if(data) { 
 		maps = data.getAllRegions; 
 		props.maps(maps)
+	}
+
+	const [showDelete, toggleShowDelete] 	= useState(false);
+    const [toDelete, setDeleteRegion] = useState({})
+
+	const setShowDelete = (_id) => {
+        setDeleteRegion(_id);
+		toggleShowDelete(!showDelete)
 	}
 
     const refetchTodos = async (refetch) => {
@@ -74,12 +83,14 @@ const Maps = (props) => {
                         name = {map.name} _id = {map._id}
                         id = {map.id} map = {map} delete = {deleteRegion}
 						updateRegionField = {updateRegion} setActiveRegion = {setActiveRegion}
+						setShowDelete = {setShowDelete}
                     />
                 ))}</div>
             <div className = "map-right-body">
                 <img id = "img2" src = {require('./images/earth2.png')}/>
                 <div className = "map-create" onClick = {createNewMap}>Create New Map</div>
             </div>
+			<div>{showDelete && (<Delete _id = {toDelete} deleteRegion = {deleteRegion} showDelete = {showDelete} setShowDelete={setShowDelete} />)}</div>
         </div>
     )
 }
