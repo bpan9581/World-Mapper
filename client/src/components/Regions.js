@@ -12,7 +12,9 @@ const Regions = (props) => {
 
     const clickDisabled = () => { };
 
-    let path = props.path;
+    let path;
+    let ancestorPath = [];
+    let pathNames = []
 
     let maps = [];
     let region = [];
@@ -21,6 +23,7 @@ const Regions = (props) => {
     if (data) {
         region = data.getRegionById;
         parentId = data.getRegionById.parent;
+        path = region.path;
     }
 
     const { loading: loading1, error: error1, data: data1, refetch: refetch1 } = useQuery(GET_DB_REGIONS);
@@ -76,6 +79,27 @@ const Regions = (props) => {
         refetch();
     }
 
+    const redirectPath = (e, index) => {
+        const ancestor = Object.values(maps).filter(region => region._id === e);
+        let name;
+        ancestor.forEach(e => name = e.name)
+        pathNames.push(name)
+        let _id;
+        ancestor.forEach(e => _id = e._id)
+        if(index === path.length - 1){
+            ancestorPath.push( <Link onClick = {props.tps.clearAllTransactions()} className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
+        }
+        else
+        ancestorPath.push( <div className = "flex">
+            <Link onClick = {props.tps.clearAllTransactions()} className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
+            <div className = "whitespace"></div>
+            <div>{'>'}</div>
+            <div className = "whitespace"></div>
+        </div>)
+    }
+
+    path && path.map((e, index) => redirectPath(e, index));
+
     return (
         <div className="region-viewer-container">
             <img className="stock-photo" src={require('./images/stock-photo.png')} />
@@ -121,13 +145,7 @@ const Regions = (props) => {
                     <Link to={`/maps/${children[index + 1]}/region-viewer`} className={`${nextButtonStyle}`}>arrow_forward</Link>}
             </div>
             <div className="path">
-                {path}
-                {path.length === 0 ? <Link className="disable-link" to={`/maps/${parentId}`}><div>{props.parentName}</div></Link> : <div className="flex">
-                    <div className="whitespace"></div>
-                    <div>{'>'}</div>
-                    <div className="whitespace"></div>
-                    <Link className="disable-link" to={`/maps/${parentId}`}><div>{props.parentName}</div></Link>
-                </div>}
+                {ancestorPath}
             </div>
         </div>
     )

@@ -9,11 +9,11 @@ import SpreadSheet from './components/SpreadSheet';
 import Regions from './components/Regions';
 import Account from './components/Account';
 
-import { useQuery } 		from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 const App = () => {
 	let user = null;
-	let transactionStack = new jsTPS();
+	const [transactionStack, setTransaction] = useState(new jsTPS());
 	const [activeRegion, setActiveRegion] = useState({});
 	const [activeChildren, setActiveChildren] = useState({});
 	const [path, setPath] = useState([]);
@@ -35,7 +35,7 @@ const App = () => {
 	}
 
 	let name, firstName, lastName, email, _id;
-	if(user) {
+	if (user) {
 		name = user.firstName + " " + user.lastName;
 		firstName = user.firstName;
 		lastName = user.lastName;
@@ -56,32 +56,32 @@ const App = () => {
 		setParent(name);
 	}
 
-	console.log(path)
-
-	useEffect(() => {refetch()}, [])
 
 	return (
 		<Router>
 			<div>
-				<Header fetchUser={refetch} user = {user} name = {name}/>
-				<Redirect exact from="/" to={ {pathname: "/welcome"} } />
-				{check ? <Redirect exact from="/welcome" to={ {pathname: "/maps"} } /> : <div></div>}
-				{!check ? <Redirect exact from="/" to={ {pathname: "/welcome"} } /> : <div></div>}
+				<Header fetchUser={refetch} user={user} name={name} tps = {transactionStack} />
+				<Redirect exact from="/" to={{ pathname: "/welcome" }} />
+				{check ? <Redirect exact from="/welcome" to={{ pathname: "/maps" }} /> : <div></div>}
+				{!check ? <Redirect exact from="/" to={{ pathname: "/welcome" }} /> : <div></div>}
 				<Switch>
 					<Route path="/welcome" component={Welcome} />
-					<Route path = "/maps" exact render = {
+					<Route path="/maps" exact render={
 						() =>
-						<Map 
-							fetchUser = {refetch}
-							user = {user} maps = {sendRegions}
-							setActiveRegion = {test}
-							
-						/>
-					}/>
-					<Route path = "/maps/:_id" exact><SpreadSheet  user = {user} regions = {regions} setPath = {setAncestorPath} setChildren = {setChildren} activeRegion = {activeRegion}/></Route>
-					<Route path = "/maps/:_id/region-viewer"><Regions parentName = {parentName} path = {path} children = {activeChildren}/></Route>
-					<Route path = "/account"><Account firstName = {firstName} 
-						lastName = {lastName} email = {email} _id = {_id}
+							<Map
+								fetchUser={refetch}
+								user={user} maps={sendRegions}
+								setActiveRegion={test}
+
+							/>
+					} />
+					<Route path="/maps/:_id" exact><SpreadSheet user={user} regions=
+						{regions} setPath={setAncestorPath} setChildren={setChildren} 
+						activeRegion = {activeRegion} tps = {transactionStack}/></Route>
+					<Route path="/maps/:_id/region-viewer"><Regions parentName={parentName}
+						path={path} children={activeChildren} tps = {transactionStack}/></Route>
+					<Route path="/account"><Account firstName={firstName}
+						lastName={lastName} email={email} _id={_id}
 					/></Route>
 				</Switch>
 			</div>

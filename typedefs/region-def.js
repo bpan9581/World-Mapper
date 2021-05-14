@@ -22,7 +22,8 @@ const typeDefs = gql `
     extend type Mutation {
         addMap(map: MapInput!): String
         addRegion(_id: String!, map: MapInput!): String
-        deleteRegion(_id: String!): String
+        readdRegion(region: RegionInput!, index: Int!): String
+        deleteRegion(_id: String!): Region
         updateRegion(_id: String!, field: String, value: String!): String
         updateRegionLandmark(_id: String!, field: String, value: [String]!): [String]
         sort(_id: String!, value: [String]!): String
@@ -33,6 +34,19 @@ const typeDefs = gql `
 		name: String
 		owner: String
         children: [String]
+    }
+
+    input RegionInput {
+        _id : String
+        name : String
+        owner : String
+        map : Boolean
+        children : [String]
+        landmark : [String]
+        capital : String
+        leader : String
+        parent : String
+        path : [String]
     }
 `;
 

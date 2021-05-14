@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 
 const SpreadSheetEntries = (props) => {
     let region = props.region;
-    console.log(region.landmark)
 
     let landmarkCheck = region.landmark.length ;
 
     const deleteRegion = () => {
-        props.setShowDelete(region._id);
+        props.setShowDelete(region._id, props.index);
 
     }
 
@@ -41,10 +40,7 @@ const SpreadSheetEntries = (props) => {
     const  handleKeyPress = (event) =>{
         switch(event.keyCode){
             case 37: 
-                if(editingName) {
-                    event.target.blur();
-                }
-                else if(editingCapital) {
+                if(editingCapital) {
                     event.target.blur();
                     toggleNameEdit(true);
                 }
@@ -62,33 +58,79 @@ const SpreadSheetEntries = (props) => {
                     event.target.blur();
                     toggleLeaderEdit(true);
                 }
-                else if(editingLeader){
-                    event.target.blur();
-                }
                 break;
+            case 38:
+                if(editingName) {
+                    if(props.index !== 0){
+                        let check = "nameInput" + (props.index - 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                else if(editingCapital) {
+                    if(props.index !== 0){
+                        let check = "capitalInput" + (props.index - 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                else if(editingLeader){
+                    if(props.index !== 0){
+                        let check = "leaderInput" + (props.index - 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                break;    
+            case 40:
+                if(editingName) {
+                    if(props.index !== props.length - 1){
+                        let check = "nameInput" + (props.index + 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                else if(editingCapital) {
+                    if(props.index !== props.length - 1){
+                        let check = "capitalInput" + (props.index + 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                else if(editingLeader){
+                    if(props.index !== props.length - 1){
+                        let check = "leaderInput" + (props.index + 1) + "";
+                        let test = document.getElementById(check)
+                        test.click();
+                    }
+                }
+                break;    
             default: break;
         }
     };
+    let nameId = "nameInput" + props.index + "";
+    let capitalId = "capitalInput" + props.index + "";
+    let leaderId = "leaderInput" + props.index + "";
 
     return (
         <div className="spreadsheet-entry-items">
             <div className="material-icons spreadsheet-entry-item size5" onClick={deleteRegion}>close</div>
             <div className="spreadsheet-entry-item spreadsheet-entry-item1 size4" >
                 {editingName ?
-                    <input id = "nameInput" onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' onKeyDown={handleKeyPress}/>
-                    : <Link to={`/maps/${region._id}`}  >{region.name}</Link>}
+                    <input  onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' onKeyDown={handleKeyPress}/>
+                    : <Link  to={`/maps/${region._id}`}  >{region.name}</Link>}
             </div>
-            <i className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
+            <i id = {nameId} className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
             <div className="spreadsheet-entry-item size7" >
                 {editingCapital ?
-                    <input id = "capitalInput" onBlur={handleCapitalEdit} autoFocus={true} defaultValue={region.capital} type='text' onKeyDown={handleKeyPress} />
-                    : <div onClick={toggleCapitalEdit}>{region.capital}</div>}</div>
+                    <input onBlur={handleCapitalEdit} autoFocus={true} defaultValue={region.capital} type='text' onKeyDown={handleKeyPress} />
+                    : <div id = {capitalId} onClick={toggleCapitalEdit}>{region.capital}</div>}</div>
             <div className="spreadsheet-entry-item size7">{
                 editingLeader ?
-                    <input id = "leaderInput" onBlur={handleLeaderEdit} autoFocus={true} defaultValue={region.leader} type='text' onKeyDown={handleKeyPress}/>
-                    : <div onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
+                    <input onBlur={handleLeaderEdit} autoFocus={true} defaultValue={region.leader} type='text' onKeyDown={handleKeyPress}/>
+                    : <div  id = {leaderId} onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
             <i className="spreadsheet-entry-item material-icons size1">image</i>
-            <Link onClick = {props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
+            <Link onClick = {props.tps} onClick = {props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
                 {landmarkCheck > 0 ?  <div className="spreadsheet-entry-text">{region.landmark.join(", ")}</div> : <div>None</div>}
             </Link>
             <div>

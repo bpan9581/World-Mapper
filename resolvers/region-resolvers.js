@@ -62,7 +62,7 @@ module.exports = {
 				children: children,
 				capital: "None",
 				leader: "None",
-				landmarks: ["None"],
+				landmarks: [],
 				parent: _id,
 				path: path
 			});
@@ -72,6 +72,29 @@ module.exports = {
 			// const updated = await newList.save();
 			if(updated) return objectId;
 			else return ('Could not add map');
+		},
+
+		readdRegion: async (_, args) => {
+			const { region, index } = args;
+			console.log(region)
+			const newRegion = new Region({
+				_id: region._id,
+				name: region.name,
+				owner: region.owner,
+				map: region.map,
+				children: region.children,
+				capital: region.capital,
+				leader: region.leader,
+				landmarks: region.landmarks,
+				parent: region.parent,
+				path: region.path
+			});
+			console.log(newRegion)
+			await newRegion.save();
+			const parent = await Region.findOne({_id: region.parent});
+			parent.children.splice(index, 0, region._id);
+			await parent.save();
+			return "hi";
 		},
 
 		deleteRegion: async (_, args) => {
@@ -86,8 +109,8 @@ module.exports = {
 				const updated = await Region.updateOne({_id: region.parent}, {children: children});
 			}
 			const deleted = await Region.deleteOne({_id: objectId})
-			if(deleted) return ("deleted");
-			else return ("no");
+			if(deleted) return (region);
+			else return (null);
 		},
 
 		updateRegion: async (_, args) => {

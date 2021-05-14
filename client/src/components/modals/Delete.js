@@ -6,7 +6,7 @@ import WMFooter from 'wt-frontend/build/components/wmodal/WMFooter';
 const Delete = (props) => {
 
     const handleDelete = async () => {
-        props.deleteRegion(props._id);
+        props.deleteRegion();
 
         props.setShowDelete(false);
     }

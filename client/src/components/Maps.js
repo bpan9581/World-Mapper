@@ -31,19 +31,6 @@ const Maps = (props) => {
 		toggleShowDelete(!showDelete)
 	}
 
-    const refetchTodos = async (refetch) => {
-		const { loading, error, data } = await refetch();
-		if (data) {
-			maps = data.getAllMaps;
-	
-			if (activeMap._id) {
-				let tempID = activeMap._id;
-				let list = maps.find(list => list._id === tempID);
-				setActiveMap(list);
-
-			}
-		}
-	}
 
     const createNewMap = async () => {
 		const length = maps.length
@@ -59,8 +46,8 @@ const Maps = (props) => {
 		refetch();
 	};
 
-	const deleteRegion = async (e) => {
-		DeleteRegion({ variables: { _id: e}, refetchQueries: [{ query: GET_DB_REGIONS }]});
+	const deleteRegion = async () => {
+		DeleteRegion({ variables: { _id: toDelete}, refetchQueries: [{ query: GET_DB_REGIONS }]});
 		refetch();
 	};
 

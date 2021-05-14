@@ -39,7 +39,7 @@ const regionSchema = new Schema(
 			required: false
 		},
         path: {
-            type: {ObjectId},
+            type: [ObjectId],
             required: false
         }
 	},
