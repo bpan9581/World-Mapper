@@ -29,7 +29,6 @@ export class EditItem_Transaction extends jsTPS_Transaction {
                     field: this.field, value: this.prev, 
 						  }
 			});
-        console.log("hi")
 		return data;
 
     }
@@ -65,8 +64,6 @@ export class Delete_Transaction extends jsTPS_Transaction {
     }
 
     async undoTransaction() {
-        console.log(this.region)
-        console.log("hi")
 		const { data } = await this.addf({ 
 				variables:{ region: this.region,  index: this.index}
 			});
@@ -74,6 +71,33 @@ export class Delete_Transaction extends jsTPS_Transaction {
 
     }
 }
+
+export class Add_Transaction extends jsTPS_Transaction {
+	constructor(parentid, map, addf, del) {
+		super();
+        this.parentid = parentid
+		this.map = map;
+		this.addf = addf;
+        this.del = del;
+	}	
+
+	async doTransaction() {
+		const { data } = await this.addf({ 
+				variables:{  _id: this.parentid, map: this.map }});
+        this._id = data.addRegion;
+		return data;
+    }
+
+    async undoTransaction() {
+		const { data } = await this.del({ 
+				variables:{ _id: this._id}
+			});
+		return data;
+
+    }
+}
+
+
 
 export class SortItems_Transaction extends jsTPS_Transaction{
     constructor(_id, children, prev, callback){
@@ -85,14 +109,32 @@ export class SortItems_Transaction extends jsTPS_Transaction{
     }
 
     async doTransaction(){
-        console.log(this.children)
-        console.log(this.prev)
         const {data} = await this.updateFunction({variables: {_id: this._id, value: this.children}})
         return data
     }
 
     async undoTransaction(){
         const {data} = await this.updateFunction({variables: {_id: this._id, value: this.prev}})
+        return data
+    }
+}
+
+export class Change_Transaction extends jsTPS_Transaction{
+    constructor(_id, parentId, prev, callback){
+        super();
+        this._id = _id;
+        this.parentId = parentId;
+        this.prev = prev;
+        this.updateFunction = callback
+    }
+
+    async doTransaction(){
+        const {data} = await this.updateFunction({variables: {_id: this._id, parentId: this.parentId}})
+        return data
+    }
+
+    async undoTransaction(){
+        const {data} = await this.updateFunction({variables: {_id: this._id, parentId: this.prev}})
         return data
     }
 }
@@ -176,7 +218,7 @@ export class jsTPS {
         console.log('redo transactions:' + this.getRedoSize());
         console.log('undo transactions:' + this.getUndoSize());
 		console.log(' ')
-		return retVal;
+		return([retVal, this.hasTransactionToUndo(), this.hasTransactionToRedo()]);
     }
     
     /**
@@ -226,7 +268,7 @@ export class jsTPS {
         console.log('redo transactions:' + this.getRedoSize());
         console.log('undo transactions:' + this.getUndoSize());
         console.log(' ')
-		return(retVal);
+		return([retVal, this.hasTransactionToUndo(), this.hasTransactionToRedo()]);
     }
 
     /**

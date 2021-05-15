@@ -18,6 +18,8 @@ const App = () => {
 	const [activeChildren, setActiveChildren] = useState({});
 	const [path, setPath] = useState([]);
 	const [parentName, setParent] = useState();
+	const test1 = transactionStack.hasTransactionToUndo();
+	const test2 = transactionStack.hasTransactionToRedo();
 
 	const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 
@@ -55,12 +57,17 @@ const App = () => {
 		setPath(path);
 		setParent(name);
 	}
+	
+	const setNewTrans = () => {
+		transactionStack.clearAllTransactions();
+	}
+
 
 
 	return (
 		<Router>
 			<div>
-				<Header fetchUser={refetch} user={user} name={name} tps = {transactionStack} />
+				<Header fetchUser={refetch} user={user} name={name} tps = {transactionStack} clearAllTransactions = {setNewTrans}/>
 				<Redirect exact from="/" to={{ pathname: "/welcome" }} />
 				{check ? <Redirect exact from="/welcome" to={{ pathname: "/maps" }} /> : <div></div>}
 				{!check ? <Redirect exact from="/" to={{ pathname: "/welcome" }} /> : <div></div>}
@@ -77,9 +84,11 @@ const App = () => {
 					} />
 					<Route path="/maps/:_id" exact><SpreadSheet user={user} regions=
 						{regions} setPath={setAncestorPath} setChildren={setChildren} 
-						activeRegion = {activeRegion} tps = {transactionStack}/></Route>
+						activeRegion = {activeRegion} tps = {transactionStack}
+						 clearAllTransactions = {setNewTrans}/></Route>
 					<Route path="/maps/:_id/region-viewer"><Regions parentName={parentName}
-						path={path} children={activeChildren} tps = {transactionStack}/></Route>
+						path={path} children={activeChildren} tps = {transactionStack}
+						clearAllTransactions = {setNewTrans}/></Route>
 					<Route path="/account"><Account firstName={firstName}
 						lastName={lastName} email={email} _id={_id}
 					/></Route>

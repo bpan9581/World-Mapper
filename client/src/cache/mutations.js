@@ -87,3 +87,15 @@ export const SORT = gql `
 		sort(_id: $_id, value: $value)
 	}
 `;
+
+export const CHANGE_PARENT = gql `
+	mutation ChangeParent($_id: String!, $parentId: String!){
+		changeParent(_id: $_id, parentId: $parentId)
+	}
+`;
+
+export const MOVE_TOP = gql `
+mutation MoveTop($_id: String!){
+	moveTop(_id: $_id)
+}
+`;

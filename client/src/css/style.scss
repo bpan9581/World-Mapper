@@ -283,6 +283,9 @@ html, body {
 .landmark-text {
     color: rgb(215, 215, 215);
 }
+.landmark-text2 {
+    color: rgba(195, 195, 195, 0.4);
+}
 
 .landmark-text-container:hover {
     background-color: rgb(179, 172, 172);
@@ -296,5 +299,20 @@ html, body {
 .landmark-delete:hover{
     color: whitesmoke;
     background-color: rgb(210, 45, 45);
+    cursor: pointer;
+}
+
+.undo-redo-disabled{
+    color: rgb(45, 45, 45);
+    cursor: default;
+}
+
+.change-parent-text{
+    color: whitesmoke;
+}
+
+.change-parent-text:hover{
+    color: white;
+    background-color: gray;
     cursor: pointer;
 }

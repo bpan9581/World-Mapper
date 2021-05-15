@@ -158,6 +158,8 @@ html {
     scrollbar-width: none; /* Firefox 64 */
 }
 
+
+
 .spreadsheet-top {
     display: flex;
     justify-content: space-between;
@@ -272,8 +274,6 @@ html {
 .region-viewer-text-values {
     display: flex;
     margin-top: 2.5%;
-    justify-content: space-between;
-    width: 30%;
     font-size: 15pt;
 }
 
@@ -293,7 +293,16 @@ html {
 
 .region-viewer-landmark-body {
     height: 100%;
+    overflow-y: auto;
+    overflow: auto;
+    -ms-overflow-style: none; /* IE 11 */
 }
+
+.region-viewer-landmark-body::-webkit-scrollbar, .wsidebar::-webkit-scrollbar {
+    display: none;
+    scrollbar-width: "none";
+}
+
 
 .region-viewer-landmark-adder {
     display: flex;
@@ -404,9 +413,33 @@ html {
     overflow: hidden;
 }
 
+.landmark-text2 {
+    font-size: 16pt;
+    height: 30px;
+    padding-top: 3px;
+    padding-left: 35px;
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .landmark-delete {
     padding-top: 2px;
     padding-left: 10px;
     width: 30px;
     font-size: 14pt;
+}
+
+.spread-sheet-photo {
+    width: 40px;
+}
+
+.top-right{
+    display: grid;
+    grid-template-rows: 12% 88%;
+}
+
+.white{
+    color: whitesmoke;
 }

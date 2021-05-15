@@ -50,7 +50,7 @@ const Header = (props) => {
 			<WLHeader>
 				<WNavbar color="colored">
 					<ul>
-						<Link onClick = {props.tps.clearAllTransactions()} to = {`/maps`}> 
+						<Link onClick = {props.clearAllTransactions} to = {`/maps`}> 
 							<Logo className='logo' />
 						</Link>
 					</ul>

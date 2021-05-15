@@ -6,7 +6,7 @@ import { useMutation, useQuery } 		from '@apollo/client';
 import * as queries from '../cache/queries'
 import { Link } from 'react-router-dom';
 import Delete from './modals/Delete'
-import { EditItem_Transaction, Delete_Transaction, SortItems_Transaction } 				from '../utils/jsTPS';
+import { EditItem_Transaction, Delete_Transaction, SortItems_Transaction, Add_Transaction } 				from '../utils/jsTPS';
 
 
 const SpreadSheet = (props) => {
@@ -20,6 +20,8 @@ const SpreadSheet = (props) => {
     const [ReaddRegion] = useMutation(mutations.READD_REGION);
     const [showDelete, toggleShowDelete] 	= useState(false);
     const [toDelete, setDeleteRegion] = useState({})
+    const [hasUndo, setUndo] 				= useState(false);
+	const [hasRedo, setRedo]				= useState(false);
 
     let regions = [];
     let test = [];
@@ -36,8 +38,10 @@ const SpreadSheet = (props) => {
 	}
 
     const tpsUndo = async () => {
-        console.log(props.tps.undoTransaction)
+
 		const retVal = await props.tps.undoTransaction();
+        setUndo(retVal[1]);
+		setRedo(retVal[2]);
 		refetch();
 		return retVal;
 	}
@@ -45,6 +49,8 @@ const SpreadSheet = (props) => {
 
 	const tpsRedo = async () => {
 		const retVal = await props.tps.doTransaction();
+        setUndo(retVal[1]);
+		setRedo(retVal[2]);
 		refetch();
 		return retVal;
 	}
@@ -77,28 +83,16 @@ const SpreadSheet = (props) => {
 			owner: props.user._id,
 			children: [],
 		}
-		const { data } = await AddRegion({ variables: {_id: _id, map: map }});
-		map._id = data.addRegion;
-		refetch();
+        let transaction = new Add_Transaction(_id, map, AddRegion, DeleteRegion);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
     }
 
     const editItem = async (_id, field, value, preEdit) => {
         let transaction = new EditItem_Transaction(_id, field, preEdit, value, UpdateRegion);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
-    }
-
-    const elements = []
-    let index = 0;
-    if(children){
-        for(var i = 0; i < children.length; i++){
-            elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries 
-                region = {region} children = {children} setChildren = {props.setChildren(children)}
-                 setShowDelete = {setShowDelete} setPath = {setP} deleteRegion = {deleteRegion} tps = {props.tps.clearAllTransactions()}
-                 editItem = {editItem} index = {index} length = {children.length}/> )));
-            index++;
-        }
-    }   
+    }  
 
     const redirectPath = (e, index) => {
         const ancestor = Object.values(regions).filter(region => region._id === e);
@@ -108,11 +102,11 @@ const SpreadSheet = (props) => {
         let _id;
         ancestor.forEach(e => _id = e._id)
         if(index === path.length - 1){
-            ancestorPath.push( <Link onClick = {props.tps.clearAllTransactions()} className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
+            ancestorPath.push( <Link onClick = {props.clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
         }
         else
         ancestorPath.push( <div className = "flex">
-            <Link onClick = {props.tps.clearAllTransactions()} className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
+            <Link onClick = {props.clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
             <div className = "whitespace"></div>
             <div>{'>'}</div>
             <div className = "whitespace"></div>
@@ -148,6 +142,20 @@ const SpreadSheet = (props) => {
 		tpsRedo();
     }
 
+    const elements = []
+    let index = 0;
+    if(children){
+        for(var i = 0; i < children.length; i++){
+            elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries 
+                region = {region} children = {children} setChildren = {props.setChildren(children)}
+                 setShowDelete = {setShowDelete} setPath = {setP} deleteRegion = {deleteRegion} tps = {props.clearAllTransactions}
+                 editItem = {editItem} index = {index} length = {children.length} parentName = {name} pathNames = {pathNames}/> )));
+            index++;
+        }
+    } 
+
+    console.log(hasUndo)
+
     useEffect(() => {refetch()}, [])
 
     return (
@@ -155,8 +163,8 @@ const SpreadSheet = (props) => {
             <div className="spreadsheet-top">
                 <div className = "spreadsheet-button-container">
                     <i className="material-icons spreadsheet-buttons" onClick = {addNewSubRegion}>add</i>
-                    <i className="material-icons spreadsheet-buttons" onClick = {tpsUndo}>undo</i>
-                    <i className="material-icons spreadsheet-buttons" onClick = {tpsRedo}>redo</i>
+                    <i className={hasUndo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsUndo}>undo</i>
+                    <i className={hasRedo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsRedo}>redo</i>
                 </div>
                 <div className = "spreadsheet-region-name">
                     <>Region Name:</>

@@ -13,6 +13,7 @@ const Maps = (props) => {
     const [AddMap] = useMutation(mutations.ADD_MAP);
 	const [DeleteRegion] = useMutation(mutations.DELETE_REGION);
 	const [UpdateRegion] = useMutation(mutations.UPDATE_REGION_FIELD);
+	const [MoveTop] = useMutation(mutations.MOVE_TOP);
 
 
     const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
@@ -60,6 +61,11 @@ const Maps = (props) => {
 		props.setActiveRegion(region)
 	}
 
+	const move = async (_id) => {
+		MoveTop({ variables: { _id: _id}, refetchQueries: [{ query: GET_DB_REGIONS }]})
+		refetch();
+	}
+
 	useEffect(() => {refetch()}, [])
 
     return(
@@ -70,7 +76,7 @@ const Maps = (props) => {
                         name = {map.name} _id = {map._id}
                         id = {map.id} map = {map} delete = {deleteRegion}
 						updateRegionField = {updateRegion} setActiveRegion = {setActiveRegion}
-						setShowDelete = {setShowDelete}
+						setShowDelete = {setShowDelete} moveTop = {move}
                     />
                 ))}</div>
             <div className = "map-right-body">

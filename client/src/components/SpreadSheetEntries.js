@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const SpreadSheetEntries = (props) => {
     let region = props.region;
 
-    let landmarkCheck = region.landmark.length ;
+    let landmarkCheck = region.landmark.length;
 
     const deleteRegion = () => {
         props.setShowDelete(region._id, props.index);
@@ -36,75 +36,76 @@ const SpreadSheetEntries = (props) => {
         props.editItem(region._id, 'leader', newLeader, prevLeader);
     };
 
-    
-    const  handleKeyPress = (event) =>{
-        switch(event.keyCode){
-            case 37: 
-                if(editingCapital) {
+    let filename = './images' + props.pathNames.join('/') + '/' + props.parentName + '/' + region.name + ' Flag.png'
+
+    const handleKeyPress = (event) => {
+        switch (event.keyCode) {
+            case 37:
+                if (editingCapital) {
                     event.target.blur();
                     toggleNameEdit(true);
                 }
-                else if(editingLeader){
+                else if (editingLeader) {
                     event.target.blur();
                     toggleCapitalEdit(true);
                 }
-            break;
+                break;
             case 39:
-                if(editingName) {
+                if (editingName) {
                     event.target.blur();
                     toggleCapitalEdit(true);
                 }
-                else if(editingCapital) {
+                else if (editingCapital) {
                     event.target.blur();
                     toggleLeaderEdit(true);
                 }
                 break;
             case 38:
-                if(editingName) {
-                    if(props.index !== 0){
+                if (editingName) {
+                    if (props.index !== 0) {
                         let check = "nameInput" + (props.index - 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                else if(editingCapital) {
-                    if(props.index !== 0){
+                else if (editingCapital) {
+                    if (props.index !== 0) {
                         let check = "capitalInput" + (props.index - 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                else if(editingLeader){
-                    if(props.index !== 0){
+                else if (editingLeader) {
+                    if (props.index !== 0) {
                         let check = "leaderInput" + (props.index - 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                break;    
+                break;
             case 40:
-                if(editingName) {
-                    if(props.index !== props.length - 1){
+                if (editingName) {
+                    if (props.index !== props.length - 1) {
                         let check = "nameInput" + (props.index + 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                else if(editingCapital) {
-                    if(props.index !== props.length - 1){
+                else if (editingCapital) {
+                    if (props.index !== props.length - 1) {
                         let check = "capitalInput" + (props.index + 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                else if(editingLeader){
-                    if(props.index !== props.length - 1){
+                else if (editingLeader) {
+                    if (props.index !== props.length - 1) {
                         let check = "leaderInput" + (props.index + 1) + "";
                         let test = document.getElementById(check)
                         test.click();
                     }
                 }
-                break;    
+                break;
             default: break;
         }
     };
@@ -112,29 +113,42 @@ const SpreadSheetEntries = (props) => {
     let capitalId = "capitalInput" + props.index + "";
     let leaderId = "leaderInput" + props.index + "";
 
+
+    let img;
+    let check = false;
+    try {
+        let src = require(`./images/${props.pathNames.join('/')}/${props.parentName}/${region.name} Flag.png`);
+        if (src) check = true;
+    } catch (error) {
+        console.log(error)
+    }
+    
     return (
         <div className="spreadsheet-entry-items">
             <div className="material-icons spreadsheet-entry-item size5" onClick={deleteRegion}>close</div>
             <div className="spreadsheet-entry-item spreadsheet-entry-item1 size4" >
                 {editingName ?
-                    <input  onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' onKeyDown={handleKeyPress}/>
-                    : <Link  to={`/maps/${region._id}`}  >{region.name}</Link>}
+                    <input onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' onKeyDown={handleKeyPress} />
+                    : <Link to={`/maps/${region._id}`}  >{region.name}</Link>}
             </div>
-            <i id = {nameId} className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
+            <i id={nameId} className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
             <div className="spreadsheet-entry-item size7" >
                 {editingCapital ?
                     <input onBlur={handleCapitalEdit} autoFocus={true} defaultValue={region.capital} type='text' onKeyDown={handleKeyPress} />
-                    : <div id = {capitalId} onClick={toggleCapitalEdit}>{region.capital}</div>}</div>
+                    : <div id={capitalId} onClick={toggleCapitalEdit}>{region.capital}</div>}</div>
             <div className="spreadsheet-entry-item size7">{
                 editingLeader ?
-                    <input onBlur={handleLeaderEdit} autoFocus={true} defaultValue={region.leader} type='text' onKeyDown={handleKeyPress}/>
-                    : <div  id = {leaderId} onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
-            <i className="spreadsheet-entry-item material-icons size1">image</i>
-            <Link onClick = {props.tps} onClick = {props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
-                {landmarkCheck > 0 ?  <div className="spreadsheet-entry-text">{region.landmark.join(", ")}</div> : <div>None</div>}
+                    <input onBlur={handleLeaderEdit} autoFocus={true} defaultValue={region.leader} type='text' onKeyDown={handleKeyPress} />
+                    : <div id={leaderId} onClick={toggleLeaderEdit}>{region.leader}</div>}</div>
+            {check ? <div className = "spreadsheet-entry-item size1"><img className="spread-sheet-photo" src={require(`./images/${props.pathNames.join('/')}/${props.parentName}/${region.name} Flag.png`)} /></div> :
+                <i className="spreadsheet-entry-item material-icons size1">image</i>
+            }
+
+            <Link onClick={props.tps} onClick={props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
+                {landmarkCheck > 0 ? <div className="spreadsheet-entry-text">{region.landmark.join(", ")}</div> : <div>None</div>}
             </Link>
             <div>
-        </div>
+            </div>
         </div>
     )
 }

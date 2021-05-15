@@ -27,6 +27,8 @@ const typeDefs = gql `
         updateRegion(_id: String!, field: String, value: String!): String
         updateRegionLandmark(_id: String!, field: String, value: [String]!): [String]
         sort(_id: String!, value: [String]!): String
+        changeParent(_id: String!, parentId: String!): String
+        moveTop(_id: String!): String
     }
 
     input MapInput{
