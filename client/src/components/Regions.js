@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GET_DB_REGION, GET_DB_REGIONS } from '../cache/queries'
 import * as mutations from '../cache/mutations';
@@ -35,6 +35,25 @@ const Regions = (props) => {
 		refetch();
 		return retVal;
 	}
+
+    const clearAllTransactions = () => {
+        setRedo(false);
+        setUndo(false)
+        props.clearAllTransactions();
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.ctrlKey && event.key === 'z'){
+            if(hasUndo)tpsUndo();	
+		}		
+		if (event.ctrlKey && event.key === 'y'){
+			if(hasRedo) tpsRedo();
+		}		
+    }
+    useEffect(
+		() => {document.addEventListener('keydown', handleKeyDown);
+		return() => document.removeEventListener('keydown', handleKeyDown)}
+		)
 
     let path;
     let ancestorPath = [];
@@ -125,11 +144,11 @@ const Regions = (props) => {
         let _id;
         ancestor.forEach(e => _id = e._id)
         if(index === path.length - 1){
-            ancestorPath.push( <Link  className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
+            ancestorPath.push( <Link onClick = {clearAllTransactions}  className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
         }
         else
         ancestorPath.push( <div className = "flex">
-            <Link  className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
+            <Link onClick = {clearAllTransactions}  className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
             <div className = "whitespace"></div>
             <div>{'>'}</div>
             <div className = "whitespace"></div>
@@ -151,9 +170,9 @@ const Regions = (props) => {
         <div className="region-viewer-container">
             <div className = "top-right">
                 <div className = "flex white">
-                    <i className={hasUndo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsUndo}>undo</i>
+                    <i className={hasUndo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {hasUndo ? tpsUndo : clickDisabled}>undo</i>
                     <div className = "whitespace"></div>
-                    <i className={hasRedo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsRedo}>redo</i>
+                    <i className={hasRedo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {hasRedo ? tpsRedo : clickDisabled}>redo</i>
                 </div>
                 {check ? <img className="stock-photo" src={require(`./images/${pathNames.join('/')}/${region.name} Flag.png`)} /> :
                 <img className="stock-photo" src={require('./images/stock-photo.png')} />}
@@ -168,7 +187,7 @@ const Regions = (props) => {
                 <div className="region-viewer-text-values">
                     <div>Parent Region:</div>
                     <div className = "whitespace"></div>
-                    <Link to={`/maps/${parentId}`}>{pathNames[pathNames.length - 1]}</Link>
+                    <Link onClick = {clearAllTransactions} to={`/maps/${parentId}`}>{pathNames[pathNames.length - 1]}</Link>
                     <div className = "whitespace"></div>
                     <i className="material-icons spreadsheet-buttons" onClick = {setShowChange1}>edit</i>
                 </div>
@@ -203,10 +222,10 @@ const Regions = (props) => {
             </div>
             <div className="absolute-sister">
                 {index === 0 ? <i className={`${prevButtonStyle}`}>arrow_back</i> :
-                    <Link to={`/maps/${children[index - 1]}/region-viewer`}  className={`${prevButtonStyle}`}>arrow_back</Link>}
+                    <Link to={`/maps/${children[index - 1]}/region-viewer`} onClick = {clearAllTransactions}  className={`${prevButtonStyle}`}>arrow_back</Link>}
                 <div className="whitespace"></div>
                 {index === children.length - 1 ? <i className={`${nextButtonStyle}`}>arrow_forward</i> :
-                    <Link to={`/maps/${children[index + 1]}/region-viewer`}  className={`${nextButtonStyle}`}>arrow_forward</Link>}
+                    <Link to={`/maps/${children[index + 1]}/region-viewer`}  onClick = {clearAllTransactions} className={`${nextButtonStyle}`}>arrow_forward</Link>}
             </div>
             <div className="path">
                 {ancestorPath}

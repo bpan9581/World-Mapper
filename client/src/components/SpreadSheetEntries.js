@@ -129,7 +129,7 @@ const SpreadSheetEntries = (props) => {
             <div className="spreadsheet-entry-item spreadsheet-entry-item1 size4" >
                 {editingName ?
                     <input onBlur={handleNameEdit} autoFocus={true} defaultValue={region.name} type='text' onKeyDown={handleKeyPress} />
-                    : <Link to={`/maps/${region._id}`}  >{region.name}</Link>}
+                    : <Link to={`/maps/${region._id}`}  onClick = {props.clearAllTransactions}>{region.name}</Link>}
             </div>
             <i id={nameId} className="material-icons spreadsheet-entry-item size5" onClick={() => toggleNameEdit(!editingName)}>edit</i>
             <div className="spreadsheet-entry-item size7" >
@@ -144,7 +144,7 @@ const SpreadSheetEntries = (props) => {
                 <i className="spreadsheet-entry-item material-icons size1">image</i>
             }
 
-            <Link onClick={props.tps} onClick={props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
+            <Link onClick = {props.clearAllTransactions} onClick={props.setPath} to={`/maps/${region._id}/region-viewer`} className="spreadsheet-entry-item size8">
                 {landmarkCheck > 0 ? <div className="spreadsheet-entry-text">{region.landmark.join(", ")}</div> : <div>None</div>}
             </Link>
             <div>

@@ -22,6 +22,7 @@ const SpreadSheet = (props) => {
     const [toDelete, setDeleteRegion] = useState({})
     const [hasUndo, setUndo] 				= useState(false);
 	const [hasRedo, setRedo]				= useState(false);
+    const clickDisabled = () => { };
 
     let regions = [];
     let test = [];
@@ -76,6 +77,25 @@ const SpreadSheet = (props) => {
         props.setPath(ancestorPath, name);
     }
 
+    const clearAllTransactions = () => {
+        setRedo(false);
+        setUndo(false)
+        props.clearAllTransactions();
+    }
+
+    const handleKeyDown = (event) => {
+        if (event.ctrlKey && event.key === 'z'){
+            if(hasUndo)tpsUndo();	
+		}		
+		if (event.ctrlKey && event.key === 'y'){
+			if(hasRedo) tpsRedo();
+		}		
+    } 
+    useEffect(
+		() => {document.addEventListener('keydown', handleKeyDown);
+		return() => document.removeEventListener('keydown', handleKeyDown)}
+		)
+
     const addNewSubRegion = async () => {
 		const map = {
 			_id: '',
@@ -102,11 +122,11 @@ const SpreadSheet = (props) => {
         let _id;
         ancestor.forEach(e => _id = e._id)
         if(index === path.length - 1){
-            ancestorPath.push( <Link onClick = {props.clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
+            ancestorPath.push( <Link onClick = {clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`} ><div>{name}</div></Link>)
         }
         else
         ancestorPath.push( <div className = "flex">
-            <Link onClick = {props.clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
+            <Link onClick = {clearAllTransactions} className = "disable-link" to = {`/maps/${_id}`}><div>{name}</div></Link>
             <div className = "whitespace"></div>
             <div>{'>'}</div>
             <div className = "whitespace"></div>
@@ -148,11 +168,12 @@ const SpreadSheet = (props) => {
         for(var i = 0; i < children.length; i++){
             elements.push(regions.filter(x => x._id === children[i]).map( region => (<SpreadSheetEntries 
                 region = {region} children = {children} setChildren = {props.setChildren(children)}
-                 setShowDelete = {setShowDelete} setPath = {setP} deleteRegion = {deleteRegion} tps = {props.clearAllTransactions}
+                 setShowDelete = {setShowDelete} setPath = {setP} deleteRegion = {deleteRegion} clearAllTransactions = {clearAllTransactions}
                  editItem = {editItem} index = {index} length = {children.length} parentName = {name} pathNames = {pathNames}/> )));
             index++;
         }
     } 
+
 
     console.log(hasUndo)
 
@@ -163,8 +184,8 @@ const SpreadSheet = (props) => {
             <div className="spreadsheet-top">
                 <div className = "spreadsheet-button-container">
                     <i className="material-icons spreadsheet-buttons" onClick = {addNewSubRegion}>add</i>
-                    <i className={hasUndo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsUndo}>undo</i>
-                    <i className={hasRedo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {tpsRedo}>redo</i>
+                    <i className={hasUndo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {hasUndo ? tpsUndo : clickDisabled}>undo</i>
+                    <i className={hasRedo ? "material-icons spreadsheet-buttons" : "material-icons undo-redo-disabled"} onClick = {hasRedo ? tpsRedo : clickDisabled}>redo</i>
                 </div>
                 <div className = "spreadsheet-region-name">
                     <>Region Name:</>
